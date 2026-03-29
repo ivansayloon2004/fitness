@@ -267,6 +267,185 @@ const roadmapTemplates = {
   }
 };
 
+const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+const smartWorkoutBlueprints = {
+  fat_loss: [
+    {
+      day: "Monday",
+      exercises: [
+        { name: "Back squat", sets: 4, reps: "5-6", focus: "Lower strength" },
+        { name: "Walking lunges", sets: 3, reps: "10 each side", focus: "Leg drive" },
+        { name: "Plank", sets: 3, reps: "45 sec", focus: "Core brace" }
+      ]
+    },
+    {
+      day: "Tuesday",
+      exercises: [
+        { name: "Incline dumbbell press", sets: 4, reps: "8-10", focus: "Upper push" },
+        { name: "Chest-supported row", sets: 4, reps: "10-12", focus: "Upper pull" },
+        { name: "Bike intervals", sets: 6, reps: "30 sec hard", focus: "Conditioning" }
+      ]
+    },
+    {
+      day: "Thursday",
+      exercises: [
+        { name: "Romanian deadlift", sets: 4, reps: "8", focus: "Posterior chain" },
+        { name: "Goblet squat", sets: 3, reps: "12", focus: "Volume work" },
+        { name: "Hanging knee raise", sets: 3, reps: "12-15", focus: "Core" }
+      ]
+    },
+    {
+      day: "Friday",
+      exercises: [
+        { name: "Lat pulldown", sets: 4, reps: "10-12", focus: "Back width" },
+        { name: "Push-ups", sets: 3, reps: "AMRAP", focus: "Chest endurance" },
+        { name: "Farmer carry", sets: 4, reps: "40 meters", focus: "Grip and trunk" }
+      ]
+    },
+    {
+      day: "Saturday",
+      exercises: [
+        { name: "Zone 2 cardio", sets: 1, reps: "35 min", focus: "Fat-loss engine" },
+        { name: "Mobility flow", sets: 1, reps: "15 min", focus: "Recovery" },
+        { name: "Step goal", sets: 1, reps: "10k+", focus: "Daily movement" }
+      ]
+    }
+  ],
+  recomp: [
+    {
+      day: "Monday",
+      exercises: [
+        { name: "Barbell squat", sets: 4, reps: "6-8", focus: "Leg strength" },
+        { name: "Romanian deadlift", sets: 3, reps: "8-10", focus: "Hamstrings" },
+        { name: "Calf raise", sets: 3, reps: "15", focus: "Lower leg work" }
+      ]
+    },
+    {
+      day: "Tuesday",
+      exercises: [
+        { name: "Bench press", sets: 4, reps: "6-8", focus: "Chest strength" },
+        { name: "Seated row", sets: 4, reps: "10", focus: "Upper back" },
+        { name: "Lateral raise", sets: 3, reps: "15", focus: "Shoulders" }
+      ]
+    },
+    {
+      day: "Thursday",
+      exercises: [
+        { name: "Deadlift", sets: 4, reps: "4-5", focus: "Posterior chain" },
+        { name: "Bulgarian split squat", sets: 3, reps: "10 each side", focus: "Single-leg balance" },
+        { name: "Cable crunch", sets: 3, reps: "15", focus: "Core" }
+      ]
+    },
+    {
+      day: "Friday",
+      exercises: [
+        { name: "Overhead press", sets: 4, reps: "6-8", focus: "Shoulder press" },
+        { name: "Pull-up or assisted pull-up", sets: 4, reps: "6-10", focus: "Back and arms" },
+        { name: "Dumbbell curl", sets: 3, reps: "12", focus: "Biceps" }
+      ]
+    },
+    {
+      day: "Saturday",
+      exercises: [
+        { name: "Incline dumbbell press", sets: 3, reps: "10-12", focus: "Upper chest" },
+        { name: "Leg press", sets: 3, reps: "12", focus: "Lower body volume" },
+        { name: "Bike or rower", sets: 1, reps: "20 min", focus: "Recovery cardio" }
+      ]
+    }
+  ],
+  lean_gain: [
+    {
+      day: "Monday",
+      exercises: [
+        { name: "Barbell bench press", sets: 4, reps: "6-8", focus: "Chest strength" },
+        { name: "Incline dumbbell press", sets: 3, reps: "8-10", focus: "Upper chest" },
+        { name: "Cable fly", sets: 3, reps: "12-15", focus: "Chest volume" }
+      ]
+    },
+    {
+      day: "Tuesday",
+      exercises: [
+        { name: "Weighted pull-down", sets: 4, reps: "8-10", focus: "Back width" },
+        { name: "Barbell row", sets: 4, reps: "8", focus: "Back thickness" },
+        { name: "Hammer curl", sets: 3, reps: "12", focus: "Arms" }
+      ]
+    },
+    {
+      day: "Wednesday",
+      exercises: [
+        { name: "Back squat", sets: 4, reps: "6-8", focus: "Quad strength" },
+        { name: "Leg press", sets: 3, reps: "12", focus: "Volume work" },
+        { name: "Leg curl", sets: 3, reps: "12-15", focus: "Hamstrings" }
+      ]
+    },
+    {
+      day: "Friday",
+      exercises: [
+        { name: "Overhead press", sets: 4, reps: "6-8", focus: "Shoulders" },
+        { name: "Lateral raise", sets: 4, reps: "12-15", focus: "Medial delts" },
+        { name: "Triceps rope press-down", sets: 3, reps: "12", focus: "Arms" }
+      ]
+    },
+    {
+      day: "Saturday",
+      exercises: [
+        { name: "Romanian deadlift", sets: 4, reps: "8", focus: "Posterior chain" },
+        { name: "Hip thrust", sets: 4, reps: "10", focus: "Glutes" },
+        { name: "Hanging leg raise", sets: 3, reps: "12", focus: "Core" }
+      ]
+    }
+  ],
+  strength_gain: [
+    {
+      day: "Monday",
+      exercises: [
+        { name: "Competition squat", sets: 5, reps: "3-5", focus: "Primary lift" },
+        { name: "Paused squat", sets: 3, reps: "3", focus: "Technique" },
+        { name: "Split squat", sets: 3, reps: "8 each side", focus: "Accessory" }
+      ]
+    },
+    {
+      day: "Tuesday",
+      exercises: [
+        { name: "Competition bench", sets: 5, reps: "3-5", focus: "Primary lift" },
+        { name: "Close-grip bench", sets: 3, reps: "5-6", focus: "Lockout strength" },
+        { name: "Chest-supported row", sets: 4, reps: "8", focus: "Upper back" }
+      ]
+    },
+    {
+      day: "Thursday",
+      exercises: [
+        { name: "Deadlift", sets: 5, reps: "2-4", focus: "Primary pull" },
+        { name: "Deficit deadlift", sets: 3, reps: "4", focus: "Speed off floor" },
+        { name: "Back extension", sets: 3, reps: "12", focus: "Lower back" }
+      ]
+    },
+    {
+      day: "Friday",
+      exercises: [
+        { name: "Overhead press", sets: 4, reps: "5-6", focus: "Press power" },
+        { name: "Weighted pull-up", sets: 4, reps: "5-6", focus: "Upper back strength" },
+        { name: "Face pull", sets: 3, reps: "15", focus: "Shoulder health" }
+      ]
+    },
+    {
+      day: "Saturday",
+      exercises: [
+        { name: "Tempo squat", sets: 4, reps: "4", focus: "Control under load" },
+        { name: "Bench volume work", sets: 4, reps: "6", focus: "Extra bench practice" },
+        { name: "Weighted plank", sets: 3, reps: "45 sec", focus: "Bracing" }
+      ]
+    }
+  ]
+};
+
+const STORAGE_KEYS = {
+  food: "pulseforge-food-log",
+  progress: "pulseforge-progress",
+  workout: "pulseforge-workout"
+};
+
 const coachForm = document.getElementById("coach-form");
 const goalInput = document.getElementById("goal");
 const goalCards = Array.from(document.querySelectorAll(".goal-card"));
@@ -276,8 +455,89 @@ const servingsInput = document.getElementById("servings");
 const foodLogList = document.getElementById("food-log");
 const clearLogButton = document.getElementById("clear-log");
 
+const progressForm = document.getElementById("progress-form");
+const checkinDateInput = document.getElementById("checkin-date");
+const progressWeightInput = document.getElementById("progress-weight");
+const progressWaistInput = document.getElementById("progress-waist");
+const progressPhotoInput = document.getElementById("progress-photo");
+const progressPhotoPreview = document.getElementById("progress-photo-preview");
+const progressPhotoTitle = document.getElementById("progress-photo-title");
+const progressPhotoNote = document.getElementById("progress-photo-note");
+const progressGallery = document.getElementById("progress-gallery");
+const progressLogList = document.getElementById("progress-log");
+const clearProgressButton = document.getElementById("clear-progress");
+const progressStatus = document.getElementById("progress-status");
+
+const workoutForm = document.getElementById("workout-form");
+const workoutDaySelect = document.getElementById("workout-day");
+const exerciseNameInput = document.getElementById("exercise-name");
+const exerciseSetsInput = document.getElementById("exercise-sets");
+const exerciseRepsInput = document.getElementById("exercise-reps");
+const exerciseFocusInput = document.getElementById("exercise-focus");
+const loadSmartSplitButton = document.getElementById("load-smart-split");
+const clearWorkoutPlanButton = document.getElementById("clear-workout-plan");
+const workoutDaysContainer = document.getElementById("workout-days");
+const workoutStatus = document.getElementById("workout-status");
+
 let currentPlan = null;
 let foodLog = [];
+let progressEntries = [];
+let workoutPlan = {};
+let pendingProgressPhoto = "";
+
+function loadState(key, fallback) {
+  try {
+    const rawValue = window.localStorage.getItem(key);
+
+    if (!rawValue) {
+      return fallback;
+    }
+
+    return JSON.parse(rawValue);
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function saveState(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function getEmptyWorkoutPlan() {
+  return weekDays.reduce((plan, day) => {
+    plan[day] = [];
+    return plan;
+  }, {});
+}
+
+function normalizeWorkoutPlan(value) {
+  const normalized = getEmptyWorkoutPlan();
+
+  if (!value || typeof value !== "object") {
+    return normalized;
+  }
+
+  weekDays.forEach((day) => {
+    normalized[day] = Array.isArray(value[day])
+      ? value[day]
+          .map((item) => ({
+            id: item.id || `exercise-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+            name: String(item.name || "").trim(),
+            sets: Number(item.sets) || 0,
+            reps: String(item.reps || "").trim(),
+            focus: String(item.focus || "").trim()
+          }))
+          .filter((item) => item.name && item.sets > 0 && item.reps)
+      : [];
+  });
+
+  return normalized;
+}
 
 function formatCalories(value) {
   return `${Math.round(value).toLocaleString()} kcal`;
@@ -285,6 +545,45 @@ function formatCalories(value) {
 
 function formatMacros(protein, carbs, fat) {
   return `${protein}g P / ${carbs}g C / ${fat}g F`;
+}
+
+function formatMeasurement(value, unit) {
+  return `${Number(value).toFixed(1)} ${unit}`;
+}
+
+function formatChange(value, unit) {
+  const prefix = value > 0 ? "+" : "";
+  return `${prefix}${Number(value).toFixed(1)} ${unit}`;
+}
+
+function formatDateLabel(dateString) {
+  if (!dateString) {
+    return "No date";
+  }
+
+  const date = new Date(`${dateString}T00:00:00`);
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  }).format(date);
+}
+
+function getTodayIsoString() {
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  return new Date(now.getTime() - (offset * 60000)).toISOString().slice(0, 10);
+}
+
+function setStatus(element, message, tone = "neutral") {
+  element.textContent = message;
+
+  if (tone === "neutral") {
+    delete element.dataset.tone;
+    return;
+  }
+
+  element.dataset.tone = tone;
 }
 
 function getFoodById(foodId) {
@@ -387,6 +686,16 @@ function buildCoachMessage(plan) {
   return `${plan.preset.coachNote} At ${formatCalories(plan.targetCalories)} per day, your current setup trends toward about ${weeklyAmount.toFixed(2)} kg per week of ${changeDirection}. ${trainingLine}`;
 }
 
+function createWorkoutItem(data) {
+  return {
+    id: data.id || `exercise-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    name: String(data.name || "").trim(),
+    sets: Number(data.sets),
+    reps: String(data.reps || "").trim(),
+    focus: String(data.focus || "").trim()
+  };
+}
+
 function renderPlan(plan) {
   currentPlan = plan;
 
@@ -407,6 +716,7 @@ function renderPlan(plan) {
 
   const roadmapList = document.getElementById("roadmap-list");
   roadmapList.innerHTML = "";
+
   plan.roadmap.forEach((item) => {
     const listItem = document.createElement("li");
     listItem.textContent = item;
@@ -415,6 +725,7 @@ function renderPlan(plan) {
 
   const watchList = document.getElementById("watch-list");
   watchList.innerHTML = "";
+
   plan.preset.watchList.forEach((foodId) => {
     const food = getFoodById(foodId);
     const entry = document.createElement("article");
@@ -428,6 +739,7 @@ function renderPlan(plan) {
 
   const swapList = document.getElementById("swap-list");
   swapList.innerHTML = "";
+
   plan.preset.swaps.forEach((swap) => {
     const listItem = document.createElement("li");
     listItem.textContent = swap;
@@ -440,6 +752,7 @@ function renderPlan(plan) {
 
 function populateFoodSelect() {
   foodSelect.innerHTML = "";
+
   foodLibrary.forEach((food) => {
     const option = document.createElement("option");
     option.value = food.id;
@@ -478,6 +791,10 @@ function updateFoodPreview() {
 
 function getLoggedCalories() {
   return foodLog.reduce((sum, item) => sum + item.totalCalories, 0);
+}
+
+function saveFoodLog() {
+  saveState(STORAGE_KEYS.food, foodLog);
 }
 
 function renderFoodLog() {
@@ -528,6 +845,319 @@ function renderFoodLog() {
   }
 }
 
+function getSortedProgressEntries() {
+  return [...progressEntries].sort((left, right) => {
+    if (left.date === right.date) {
+      return (right.createdAt || 0) - (left.createdAt || 0);
+    }
+
+    return right.date.localeCompare(left.date);
+  });
+}
+
+function clearProgressPhotoSelection() {
+  pendingProgressPhoto = "";
+  progressPhotoInput.value = "";
+  progressPhotoPreview.src = "";
+  progressPhotoPreview.classList.add("is-hidden");
+  progressPhotoTitle.textContent = "No photo selected";
+  progressPhotoNote.textContent = "Photos are compressed and stored in this browser only.";
+}
+
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const image = new Image();
+
+      image.onload = () => {
+        const maxDimension = 960;
+        const scale = Math.min(1, maxDimension / Math.max(image.width, image.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+
+        const context = canvas.getContext("2d");
+
+        if (!context) {
+          reject(new Error("Could not create image preview."));
+          return;
+        }
+
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.78));
+      };
+
+      image.onerror = () => reject(new Error("Could not load image."));
+      image.src = reader.result;
+    };
+
+    reader.onerror = () => reject(new Error("Could not read image."));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleProgressPhotoSelection() {
+  const [file] = progressPhotoInput.files || [];
+
+  if (!file) {
+    clearProgressPhotoSelection();
+    setStatus(progressStatus, "Your check-ins stay on this device unless you clear them.");
+    return;
+  }
+
+  setStatus(progressStatus, "Compressing photo for browser storage...");
+
+  try {
+    pendingProgressPhoto = await compressImage(file);
+    progressPhotoPreview.src = pendingProgressPhoto;
+    progressPhotoPreview.classList.remove("is-hidden");
+    progressPhotoTitle.textContent = file.name;
+    progressPhotoNote.textContent = "Photo ready to save with this check-in.";
+    setStatus(progressStatus, "Photo ready to save with your next check-in.", "success");
+  } catch (error) {
+    clearProgressPhotoSelection();
+    setStatus(progressStatus, "Photo could not be prepared. Try a different image.", "error");
+  }
+}
+
+function syncCoachWeightWithLatestProgress() {
+  const sortedEntries = getSortedProgressEntries();
+
+  if (!sortedEntries.length) {
+    return;
+  }
+
+  document.getElementById("weight").value = sortedEntries[0].weight.toFixed(1);
+  renderPlan(calculatePlan());
+}
+
+function renderProgressGallery(sortedEntries) {
+  progressGallery.innerHTML = "";
+
+  const photoEntries = sortedEntries.filter((entry) => entry.photoData).slice(0, 3);
+
+  if (!photoEntries.length) {
+    const emptyCard = document.createElement("div");
+    emptyCard.className = "empty-state";
+    emptyCard.textContent = "No progress photos yet. Add one to your next check-in.";
+    progressGallery.appendChild(emptyCard);
+    return;
+  }
+
+  photoEntries.forEach((entry) => {
+    const card = document.createElement("article");
+    card.className = "gallery-card";
+
+    const image = document.createElement("img");
+    image.src = entry.photoData;
+    image.alt = `Progress photo from ${formatDateLabel(entry.date)}`;
+
+    const label = document.createElement("span");
+    label.textContent = `${formatDateLabel(entry.date)} | ${formatMeasurement(entry.weight, "kg")}`;
+
+    card.appendChild(image);
+    card.appendChild(label);
+    progressGallery.appendChild(card);
+  });
+}
+
+function renderProgressLog(sortedEntries) {
+  progressLogList.innerHTML = "";
+
+  if (!sortedEntries.length) {
+    progressLogList.innerHTML = `
+      <li>
+        <div>
+          <strong>No check-ins yet</strong>
+          <span>Start logging weight, waist, and photos to build your timeline.</span>
+        </div>
+      </li>
+    `;
+    return;
+  }
+
+  sortedEntries.forEach((entry) => {
+    const listItem = document.createElement("li");
+    const content = document.createElement("div");
+    const title = document.createElement("strong");
+    const meta = document.createElement("span");
+    const removeButton = document.createElement("button");
+
+    title.textContent = formatDateLabel(entry.date);
+    meta.textContent =
+      `${formatMeasurement(entry.weight, "kg")} | ${formatMeasurement(entry.waist, "cm")}${entry.photoData ? " | Photo saved" : ""}`;
+
+    removeButton.type = "button";
+    removeButton.dataset.id = entry.id;
+    removeButton.textContent = "Remove";
+
+    content.appendChild(title);
+    content.appendChild(meta);
+    listItem.appendChild(content);
+    listItem.appendChild(removeButton);
+    progressLogList.appendChild(listItem);
+  });
+}
+
+function renderProgressTracker() {
+  const sortedEntries = getSortedProgressEntries();
+
+  if (!sortedEntries.length) {
+    document.getElementById("starting-weight").textContent = "--";
+    document.getElementById("current-weight-stat").textContent = "--";
+    document.getElementById("weight-change").textContent = "--";
+    document.getElementById("waist-change").textContent = "--";
+    renderProgressGallery(sortedEntries);
+    renderProgressLog(sortedEntries);
+    return;
+  }
+
+  const latestEntry = sortedEntries[0];
+  const earliestEntry = sortedEntries[sortedEntries.length - 1];
+  const weightChange = latestEntry.weight - earliestEntry.weight;
+  const waistChange = latestEntry.waist - earliestEntry.waist;
+
+  document.getElementById("starting-weight").textContent = formatMeasurement(earliestEntry.weight, "kg");
+  document.getElementById("current-weight-stat").textContent = formatMeasurement(latestEntry.weight, "kg");
+  document.getElementById("weight-change").textContent = formatChange(weightChange, "kg");
+  document.getElementById("waist-change").textContent = formatChange(waistChange, "cm");
+
+  renderProgressGallery(sortedEntries);
+  renderProgressLog(sortedEntries);
+}
+
+function saveWorkoutPlan() {
+  saveState(STORAGE_KEYS.workout, workoutPlan);
+}
+
+function countPlannedDays() {
+  return weekDays.filter((day) => workoutPlan[day].length > 0).length;
+}
+
+function countPlannedExercises() {
+  return weekDays.reduce((total, day) => total + workoutPlan[day].length, 0);
+}
+
+function countPlannedSets() {
+  return weekDays.reduce((total, day) => {
+    return total + workoutPlan[day].reduce((dayTotal, exercise) => dayTotal + exercise.sets, 0);
+  }, 0);
+}
+
+function buildSmartWorkoutPlan(goalId, trainingDays) {
+  const plan = getEmptyWorkoutPlan();
+  const blueprint = smartWorkoutBlueprints[goalId] || smartWorkoutBlueprints.fat_loss;
+  const dayCount = Math.max(2, Math.min(trainingDays, blueprint.length));
+
+  blueprint.slice(0, dayCount).forEach((dayPlan, index) => {
+    plan[dayPlan.day] = dayPlan.exercises.map((exercise, exerciseIndex) => {
+      return createWorkoutItem({
+        ...exercise,
+        id: `smart-${goalId}-${index}-${exerciseIndex}`
+      });
+    });
+  });
+
+  return plan;
+}
+
+function renderWorkoutPlan() {
+  document.getElementById("planned-days").textContent = countPlannedDays();
+  document.getElementById("planned-exercises").textContent = countPlannedExercises();
+  document.getElementById("planned-sets").textContent = countPlannedSets();
+
+  workoutDaysContainer.innerHTML = "";
+
+  weekDays.forEach((day) => {
+    const dayCard = document.createElement("article");
+    dayCard.className = "day-card";
+
+    const header = document.createElement("div");
+    header.className = "day-card-header";
+
+    const headingBlock = document.createElement("div");
+    const title = document.createElement("h3");
+    const subtitle = document.createElement("p");
+    const exercises = workoutPlan[day];
+
+    title.textContent = day;
+    subtitle.textContent =
+      exercises.length > 0
+        ? `${exercises.length} exercise(s) | ${exercises.reduce((sum, item) => sum + item.sets, 0)} total sets`
+        : "Recovery or open day";
+
+    headingBlock.appendChild(title);
+    headingBlock.appendChild(subtitle);
+    header.appendChild(headingBlock);
+
+    if (exercises.length > 0) {
+      const clearButton = document.createElement("button");
+      clearButton.type = "button";
+      clearButton.className = "tiny-button";
+      clearButton.dataset.clearDay = day;
+      clearButton.textContent = "Clear day";
+      header.appendChild(clearButton);
+    }
+
+    dayCard.appendChild(header);
+
+    if (!exercises.length) {
+      const emptyState = document.createElement("div");
+      emptyState.className = "empty-state";
+      emptyState.textContent = "No exercises planned yet.";
+      dayCard.appendChild(emptyState);
+    } else {
+      const list = document.createElement("ul");
+      list.className = "exercise-list";
+
+      exercises.forEach((exercise) => {
+        const item = document.createElement("li");
+        item.className = "exercise-item";
+
+        const content = document.createElement("div");
+        const name = document.createElement("strong");
+        const meta = document.createElement("p");
+        const removeButton = document.createElement("button");
+
+        name.textContent = exercise.name;
+        meta.className = "exercise-meta";
+        meta.textContent = `${exercise.sets} sets x ${exercise.reps}${exercise.focus ? ` | ${exercise.focus}` : ""}`;
+
+        removeButton.type = "button";
+        removeButton.className = "tiny-button";
+        removeButton.dataset.day = day;
+        removeButton.dataset.id = exercise.id;
+        removeButton.textContent = "Remove";
+
+        content.appendChild(name);
+        content.appendChild(meta);
+        item.appendChild(content);
+        item.appendChild(removeButton);
+        list.appendChild(item);
+      });
+
+      dayCard.appendChild(list);
+    }
+
+    workoutDaysContainer.appendChild(dayCard);
+  });
+}
+
+function initializeProgressForm() {
+  const sortedEntries = getSortedProgressEntries();
+  checkinDateInput.value = getTodayIsoString();
+
+  if (sortedEntries.length) {
+    progressWeightInput.value = sortedEntries[0].weight.toFixed(1);
+    progressWaistInput.value = sortedEntries[0].waist.toFixed(1);
+    return;
+  }
+
+  progressWeightInput.value = Number(document.getElementById("weight").value).toFixed(1);
+}
+
 goalCards.forEach((card) => {
   card.addEventListener("click", () => {
     setActiveGoal(card.dataset.goal);
@@ -556,6 +1186,7 @@ foodForm.addEventListener("submit", (event) => {
     totalCalories: Math.round(food.calories * servings)
   });
 
+  saveFoodLog();
   renderFoodLog();
   updateFoodPreview();
 });
@@ -570,16 +1201,196 @@ foodLogList.addEventListener("click", (event) => {
     return;
   }
 
-  const itemId = target.dataset.id;
-  foodLog = foodLog.filter((item) => item.id !== itemId);
+  foodLog = foodLog.filter((item) => item.id !== target.dataset.id);
+  saveFoodLog();
   renderFoodLog();
 });
 
 clearLogButton.addEventListener("click", () => {
   foodLog = [];
+  saveFoodLog();
   renderFoodLog();
 });
+
+progressPhotoInput.addEventListener("change", async () => {
+  await handleProgressPhotoSelection();
+});
+
+progressForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const entry = {
+    id: `progress-${Date.now()}`,
+    date: checkinDateInput.value,
+    weight: Number(progressWeightInput.value),
+    waist: Number(progressWaistInput.value),
+    photoData: pendingProgressPhoto,
+    createdAt: Date.now()
+  };
+
+  let nextEntries = [...progressEntries, entry];
+  let saved = saveState(STORAGE_KEYS.progress, nextEntries);
+
+  if (!saved && entry.photoData) {
+    nextEntries = [...progressEntries, { ...entry, photoData: "" }];
+    saved = saveState(STORAGE_KEYS.progress, nextEntries);
+
+    if (saved) {
+      progressEntries = nextEntries;
+      renderProgressTracker();
+      clearProgressPhotoSelection();
+      checkinDateInput.value = getTodayIsoString();
+      document.getElementById("weight").value = entry.weight.toFixed(1);
+      renderPlan(calculatePlan());
+      setStatus(
+        progressStatus,
+        "Check-in saved, but the photo was skipped because browser storage is full.",
+        "error"
+      );
+      return;
+    }
+  }
+
+  if (!saved) {
+    setStatus(progressStatus, "Check-in could not be saved in this browser.", "error");
+    return;
+  }
+
+  progressEntries = nextEntries;
+  renderProgressTracker();
+  clearProgressPhotoSelection();
+  checkinDateInput.value = getTodayIsoString();
+  progressWeightInput.value = entry.weight.toFixed(1);
+  progressWaistInput.value = entry.waist.toFixed(1);
+  document.getElementById("weight").value = entry.weight.toFixed(1);
+  renderPlan(calculatePlan());
+  setStatus(progressStatus, "Progress check-in saved.", "success");
+});
+
+progressLogList.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement) || !target.dataset.id) {
+    return;
+  }
+
+  progressEntries = progressEntries.filter((entry) => entry.id !== target.dataset.id);
+  saveState(STORAGE_KEYS.progress, progressEntries);
+  renderProgressTracker();
+  initializeProgressForm();
+
+  if (progressEntries.length) {
+    syncCoachWeightWithLatestProgress();
+  }
+
+  setStatus(progressStatus, "Progress entry removed.", "success");
+});
+
+clearProgressButton.addEventListener("click", () => {
+  progressEntries = [];
+  saveState(STORAGE_KEYS.progress, progressEntries);
+  renderProgressTracker();
+  clearProgressPhotoSelection();
+  initializeProgressForm();
+  setStatus(progressStatus, "Progress tracker cleared.", "success");
+});
+
+workoutForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const exerciseName = exerciseNameInput.value.trim();
+  const sets = Number(exerciseSetsInput.value);
+  const reps = exerciseRepsInput.value.trim();
+
+  if (!exerciseName || sets <= 0 || !reps) {
+    setStatus(workoutStatus, "Add a valid exercise, set count, and rep target.", "error");
+    return;
+  }
+
+  const selectedDay = workoutDaySelect.value;
+  const workoutItem = createWorkoutItem({
+    name: exerciseName,
+    sets,
+    reps,
+    focus: exerciseFocusInput.value
+  });
+
+  workoutPlan[selectedDay].push(workoutItem);
+  saveWorkoutPlan();
+  renderWorkoutPlan();
+  workoutForm.reset();
+  workoutDaySelect.value = selectedDay;
+  exerciseSetsInput.value = 4;
+  exerciseRepsInput.value = "8-10";
+  setStatus(workoutStatus, `Added ${exerciseName} to ${selectedDay}.`, "success");
+});
+
+loadSmartSplitButton.addEventListener("click", () => {
+  const goalId = goalInput.value;
+  const trainingDays = Number(document.getElementById("training-days").value);
+  workoutPlan = buildSmartWorkoutPlan(goalId, trainingDays);
+  saveWorkoutPlan();
+  renderWorkoutPlan();
+  setStatus(
+    workoutStatus,
+    `Loaded a ${transformationPresets[goalId].shortLabel.toLowerCase()} split for ${trainingDays} training day(s).`,
+    "success"
+  );
+});
+
+clearWorkoutPlanButton.addEventListener("click", () => {
+  workoutPlan = getEmptyWorkoutPlan();
+  saveWorkoutPlan();
+  renderWorkoutPlan();
+  setStatus(workoutStatus, "Workout plan cleared.", "success");
+});
+
+workoutDaysContainer.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  if (target.dataset.clearDay) {
+    workoutPlan[target.dataset.clearDay] = [];
+    saveWorkoutPlan();
+    renderWorkoutPlan();
+    setStatus(workoutStatus, `${target.dataset.clearDay} cleared.`, "success");
+    return;
+  }
+
+  if (!target.dataset.day || !target.dataset.id) {
+    return;
+  }
+
+  workoutPlan[target.dataset.day] = workoutPlan[target.dataset.day].filter((exercise) => {
+    return exercise.id !== target.dataset.id;
+  });
+  saveWorkoutPlan();
+  renderWorkoutPlan();
+  setStatus(workoutStatus, "Exercise removed from the planner.", "success");
+});
+
+document.getElementById("weight").addEventListener("input", () => {
+  if (!progressEntries.length) {
+    progressWeightInput.value = document.getElementById("weight").value;
+  }
+});
+
+foodLog = Array.isArray(loadState(STORAGE_KEYS.food, [])) ? loadState(STORAGE_KEYS.food, []) : [];
+progressEntries = Array.isArray(loadState(STORAGE_KEYS.progress, []))
+  ? loadState(STORAGE_KEYS.progress, [])
+  : [];
+workoutPlan = normalizeWorkoutPlan(loadState(STORAGE_KEYS.workout, getEmptyWorkoutPlan()));
 
 populateFoodSelect();
 setActiveGoal(goalInput.value);
 renderPlan(calculatePlan());
+renderProgressTracker();
+renderWorkoutPlan();
+initializeProgressForm();
+
+if (progressEntries.length) {
+  syncCoachWeightWithLatestProgress();
+}

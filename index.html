@@ -22,14 +22,15 @@
           </p>
           <div class="hero-actions">
             <a class="primary-button" href="#coach-builder">Build my plan</a>
-            <a class="ghost-button" href="#food-radar">Track food impact</a>
+            <a class="ghost-button" href="#progress-tracker">Track progress</a>
+            <a class="ghost-button" href="#workout-planner">Plan workouts</a>
           </div>
         </div>
 
         <aside class="hero-panel">
           <div class="hero-panel-header">
             <p>Coach snapshot</p>
-            <span>Version 1</span>
+            <span>Version 2</span>
           </div>
           <ul class="snapshot-list">
             <li>
@@ -39,6 +40,14 @@
             <li>
               <strong>Smart calorie target</strong>
               <span>Daily calories and macro guidance based on your body stats.</span>
+            </li>
+            <li>
+              <strong>Progress tracker</strong>
+              <span>Log weight, waist, and progress photos directly in the browser.</span>
+            </li>
+            <li>
+              <strong>Workout planner</strong>
+              <span>Build your week with daily exercises, sets, reps, and smart splits.</span>
             </li>
             <li>
               <strong>Food radar</strong>
@@ -234,6 +243,233 @@
                 <p class="eyebrow">Better swaps</p>
                 <ul id="swap-list" class="swap-list"></ul>
               </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="progress-tracker" class="panel tracker-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Progress tracker</p>
+            <h2>Log real changes with weight, waist, and photo check-ins.</h2>
+            <p>
+              Save body measurements and progress photos on this device so you
+              can compare where you started against where you are now.
+            </p>
+          </div>
+
+          <div class="tracker-layout">
+            <article class="progress-form-card">
+              <div class="card-heading">
+                <p class="eyebrow">New check-in</p>
+                <h3>Save a progress entry</h3>
+              </div>
+
+              <form id="progress-form" class="progress-form">
+                <div class="progress-form-grid">
+                  <label>
+                    Check-in date
+                    <input id="checkin-date" name="checkin-date" type="date" required />
+                  </label>
+
+                  <label>
+                    Weight (kg)
+                    <input
+                      id="progress-weight"
+                      name="progress-weight"
+                      type="number"
+                      min="35"
+                      max="250"
+                      step="0.1"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    Waist (cm)
+                    <input
+                      id="progress-waist"
+                      name="progress-waist"
+                      type="number"
+                      min="40"
+                      max="200"
+                      step="0.1"
+                      required
+                    />
+                  </label>
+                </div>
+
+                <label>
+                  Progress photo
+                  <input id="progress-photo" name="progress-photo" type="file" accept="image/*" />
+                </label>
+
+                <div class="photo-preview-card">
+                  <div>
+                    <p class="eyebrow">Photo preview</p>
+                    <h3 id="progress-photo-title">No photo selected</h3>
+                  </div>
+                  <img
+                    id="progress-photo-preview"
+                    class="progress-photo-preview is-hidden"
+                    alt="Progress photo preview"
+                  />
+                  <p id="progress-photo-note" class="helper-copy">
+                    Photos are compressed and stored in this browser only.
+                  </p>
+                </div>
+
+                <button class="primary-button" type="submit">Save check-in</button>
+              </form>
+
+              <p id="progress-status" class="status-line">
+                Your check-ins stay on this device unless you clear them.
+              </p>
+            </article>
+
+            <article class="progress-dashboard">
+              <div class="planner-stats progress-stats">
+                <div class="planner-stat">
+                  <span>Starting weight</span>
+                  <strong id="starting-weight">--</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Current weight</span>
+                  <strong id="current-weight-stat">--</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Weight change</span>
+                  <strong id="weight-change">--</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Waist change</span>
+                  <strong id="waist-change">--</strong>
+                </div>
+              </div>
+
+              <div class="tracker-history">
+                <div class="card-heading">
+                  <p class="eyebrow">Visual timeline</p>
+                  <h3>Latest check-ins</h3>
+                </div>
+
+                <div id="progress-gallery" class="progress-gallery"></div>
+                <ul id="progress-log" class="progress-log"></ul>
+                <button id="clear-progress" class="ghost-button subtle" type="button">
+                  Clear tracker
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="workout-planner" class="panel planner-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Workout planner</p>
+            <h2>Build your week with daily exercises and sets.</h2>
+            <p>
+              Add your own movements day by day, or let the coach load a smart
+              split based on your selected body transformation goal.
+            </p>
+          </div>
+
+          <div class="planner-layout">
+            <article class="planner-builder">
+              <div class="card-heading">
+                <p class="eyebrow">Daily builder</p>
+                <h3>Create or edit a workout day</h3>
+              </div>
+
+              <form id="workout-form" class="workout-form">
+                <div class="workout-form-grid">
+                  <label>
+                    Day
+                    <select id="workout-day" name="workout-day">
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                      <option value="Sunday">Sunday</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    Exercise
+                    <input
+                      id="exercise-name"
+                      name="exercise-name"
+                      type="text"
+                      maxlength="60"
+                      placeholder="Romanian deadlift"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    Sets
+                    <input id="exercise-sets" name="exercise-sets" type="number" min="1" max="10" value="4" required />
+                  </label>
+
+                  <label>
+                    Reps
+                    <input
+                      id="exercise-reps"
+                      name="exercise-reps"
+                      type="text"
+                      maxlength="20"
+                      placeholder="8-10"
+                      value="8-10"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    Focus
+                    <input
+                      id="exercise-focus"
+                      name="exercise-focus"
+                      type="text"
+                      maxlength="40"
+                      placeholder="Hamstrings and glutes"
+                    />
+                  </label>
+                </div>
+
+                <button class="primary-button" type="submit">Add exercise</button>
+              </form>
+
+              <div class="planner-actions">
+                <button id="load-smart-split" class="ghost-button subtle" type="button">
+                  Load smart split
+                </button>
+                <button id="clear-workout-plan" class="ghost-button subtle" type="button">
+                  Clear workout plan
+                </button>
+              </div>
+
+              <p id="workout-status" class="status-line">
+                Build your week manually or let the coach draft a starter split.
+              </p>
+            </article>
+
+            <article class="planner-board">
+              <div class="planner-stats">
+                <div class="planner-stat">
+                  <span>Planned days</span>
+                  <strong id="planned-days">0</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Total exercises</span>
+                  <strong id="planned-exercises">0</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Total sets</span>
+                  <strong id="planned-sets">0</strong>
+                </div>
+              </div>
+
+              <div id="workout-days" class="workout-days"></div>
             </article>
           </div>
         </section>
