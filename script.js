@@ -440,6 +440,169 @@ const smartWorkoutBlueprints = {
   ]
 };
 
+const equipmentTutorials = [
+  {
+    id: "dumbbells",
+    category: "free_weights",
+    name: "Dumbbells",
+    bestFor: "Beginner strength work",
+    setup: "Choose a pair you can control for every rep.",
+    safety: "Keep wrists neutral and move with control.",
+    overview:
+      "Dumbbells are great for presses, rows, squats, lunges, curls, and shoulder work because each arm works independently.",
+    steps: [
+      "Stand close to the rack and pick up the dumbbells with a flat back.",
+      "Brace your core before starting the lift.",
+      "Move through the full range you can control without swinging.",
+      "Lower the weight slowly instead of dropping it."
+    ]
+  },
+  {
+    id: "barbell",
+    category: "free_weights",
+    name: "Barbell",
+    bestFor: "Heavy compound lifts",
+    setup: "Start with the empty bar and secure plates with clips.",
+    safety: "Use a rack and safety pins for squats and bench press.",
+    overview:
+      "Barbells are best for squats, deadlifts, rows, overhead press, and bench press when you want to build strength fast.",
+    steps: [
+      "Check that the bar is centered on the rack and plates are clipped.",
+      "Set your hands evenly using the knurling marks as a guide.",
+      "Brace hard before unracking so your trunk stays stable.",
+      "Re-rack with control before relaxing your body."
+    ]
+  },
+  {
+    id: "smith_machine",
+    category: "machines",
+    name: "Smith machine",
+    bestFor: "Supported squats and presses",
+    setup: "Set the bar height and practice the hook rotation first.",
+    safety: "Know how to lock the bar before adding more weight.",
+    overview:
+      "The Smith machine guides the bar path, which helps beginners learn supported squats, split squats, hip thrusts, and presses.",
+    steps: [
+      "Set the bar to a starting height you can unrack safely.",
+      "Place your body where the fixed bar path feels natural.",
+      "Rotate the bar to unlock before your first rep.",
+      "Rotate it back into the hooks the moment a rep feels unsafe."
+    ]
+  },
+  {
+    id: "leg_press",
+    category: "machines",
+    name: "Leg press",
+    bestFor: "Leg volume without loading the spine heavily",
+    setup: "Adjust the seat so your knees bend deeply without your hips tucking.",
+    safety: "Do not lock your knees hard at the top.",
+    overview:
+      "The leg press trains quads, glutes, and hamstrings and is useful when you want extra leg work after squats or on lower body days.",
+    steps: [
+      "Sit down and place your feet shoulder-width apart on the platform.",
+      "Lower the sled until your knees are bent and your back stays flat.",
+      "Drive through your midfoot to press the sled up.",
+      "Stop just before knee lockout, then repeat."
+    ]
+  },
+  {
+    id: "lat_pulldown",
+    category: "machines",
+    name: "Lat pulldown",
+    bestFor: "Back and pull-up strength",
+    setup: "Set the thigh pad tight enough to keep you anchored.",
+    safety: "Pull to the upper chest, not behind the neck.",
+    overview:
+      "The lat pulldown teaches vertical pulling and builds the lats, upper back, and biceps.",
+    steps: [
+      "Adjust the thigh pad so your legs stay secure under it.",
+      "Grab the bar slightly wider than shoulder width.",
+      "Pull your elbows down toward your ribs while keeping your chest tall.",
+      "Return the bar slowly until your arms are extended."
+    ]
+  },
+  {
+    id: "cable_machine",
+    category: "cables",
+    name: "Cable machine",
+    bestFor: "Controlled resistance through many angles",
+    setup: "Set the pulley height and choose the right attachment first.",
+    safety: "Step into position before starting the rep.",
+    overview:
+      "Cable stations are ideal for rows, flyes, lateral raises, curls, triceps press-downs, and core rotations.",
+    steps: [
+      "Pick the handle or rope attachment that matches the exercise.",
+      "Set the pulley to low, middle, or high depending on the movement.",
+      "Take one step away from the stack to create clean tension.",
+      "Keep the motion smooth and avoid letting the stack slam down."
+    ]
+  },
+  {
+    id: "treadmill",
+    category: "cardio",
+    name: "Treadmill",
+    bestFor: "Walking, intervals, and easy cardio",
+    setup: "Start at a low speed before stepping into a stride.",
+    safety: "Use the safety clip when possible and do not step on moving side rails carelessly.",
+    overview:
+      "Treadmills are useful for step goals, fat-loss cardio, incline walks, and interval sessions when you want predictable pace control.",
+    steps: [
+      "Stand on the side rails and start the machine at a slow speed.",
+      "Step onto the belt once it is moving steadily.",
+      "Raise speed or incline gradually rather than all at once.",
+      "Lower the speed before stepping off at the end."
+    ]
+  },
+  {
+    id: "rowing_machine",
+    category: "cardio",
+    name: "Rowing machine",
+    bestFor: "Low-impact full-body conditioning",
+    setup: "Strap your feet snugly and set the damper to a manageable level.",
+    safety: "Drive with the legs first instead of yanking with the arms.",
+    overview:
+      "The rower trains legs, back, and conditioning at once and works well for intervals or longer steady-state cardio.",
+    steps: [
+      "Start at the catch with knees bent, chest up, and arms long.",
+      "Push through your legs first, then lean slightly back and finish with the arms.",
+      "Reverse the order on the way back: arms, hips, then knees.",
+      "Keep each stroke smooth instead of rushing."
+    ]
+  },
+  {
+    id: "kettlebell",
+    category: "accessories",
+    name: "Kettlebell",
+    bestFor: "Carries, swings, goblet work, and conditioning",
+    setup: "Use a lighter bell while learning the hinge and rack positions.",
+    safety: "Keep the bell close to your body and hinge, do not squat the swing.",
+    overview:
+      "Kettlebells are versatile for swings, goblet squats, carries, deadlifts, and single-arm pressing.",
+    steps: [
+      "Stand with the bell between your feet and hinge at the hips.",
+      "Grip the handle firmly and keep your shoulders packed.",
+      "Drive through the hips to move the bell, not just the arms.",
+      "Control the bell on the way down before the next rep."
+    ]
+  },
+  {
+    id: "bench",
+    category: "accessories",
+    name: "Adjustable bench",
+    bestFor: "Pressing, rows, step-ups, and supported work",
+    setup: "Lock the bench angle before using it.",
+    safety: "Check that the bench is stable and not sliding.",
+    overview:
+      "An adjustable bench changes flat, incline, and seated pressing angles and also supports many dumbbell and bodyweight exercises.",
+    steps: [
+      "Set the bench flat or incline depending on the exercise.",
+      "Test the lock and stability before you sit down.",
+      "Plant your feet and keep your upper back tight during presses.",
+      "Return weights safely to your thighs before standing."
+    ]
+  }
+];
+
 const STORAGE_KEYS = {
   food: "pulseforge-food-log",
   progress: "pulseforge-progress",
@@ -526,6 +689,11 @@ const dashboardCalorieBars = document.getElementById("dashboard-calorie-bars");
 const dashboardWorkoutBars = document.getElementById("dashboard-workout-bars");
 const dashboardHighlights = document.getElementById("dashboard-highlights");
 
+const equipmentFilters = document.getElementById("equipment-filters");
+const equipmentGrid = document.getElementById("equipment-grid");
+const equipmentCount = document.getElementById("equipment-count");
+const equipmentNote = document.getElementById("equipment-note");
+
 let currentPlan = null;
 let foodLog = [];
 let progressEntries = [];
@@ -533,6 +701,7 @@ let workoutPlan = {};
 let macroLogEntries = [];
 let workoutHistoryEntries = [];
 let pendingProgressPhoto = "";
+let activeEquipmentFilter = "all";
 
 function loadState(key, fallback) {
   try {
@@ -1564,6 +1733,71 @@ function initializeHistoryForm() {
   updateHistoryExerciseOptions();
 }
 
+function renderEquipmentTutorials() {
+  const tutorials = equipmentTutorials.filter((tutorial) => {
+    return activeEquipmentFilter === "all" || tutorial.category === activeEquipmentFilter;
+  });
+
+  equipmentGrid.innerHTML = "";
+  equipmentCount.textContent = `${tutorials.length} tutorial${tutorials.length === 1 ? "" : "s"}`;
+  equipmentNote.textContent =
+    activeEquipmentFilter === "all"
+      ? "Start with lighter loads and master setup before increasing weight."
+      : "Focus on one equipment family at a time and practice the setup before the first working set.";
+
+  if (!tutorials.length) {
+    const emptyCard = document.createElement("div");
+    emptyCard.className = "empty-state";
+    emptyCard.textContent = "No tutorials match this filter yet.";
+    equipmentGrid.appendChild(emptyCard);
+    return;
+  }
+
+  tutorials.forEach((tutorial) => {
+    const card = document.createElement("article");
+    card.className = "equipment-card";
+
+    const heading = document.createElement("h3");
+    const subtitle = document.createElement("p");
+    const meta = document.createElement("div");
+    const steps = document.createElement("ul");
+
+    heading.textContent = tutorial.name;
+    subtitle.className = "equipment-subtitle";
+    subtitle.textContent = tutorial.overview;
+
+    meta.className = "equipment-meta";
+    meta.innerHTML = `
+      <div>
+        <span>Best for</span>
+        <strong>${tutorial.bestFor}</strong>
+      </div>
+      <div>
+        <span>Setup</span>
+        <strong>${tutorial.setup}</strong>
+      </div>
+      <div>
+        <span>Safety</span>
+        <strong>${tutorial.safety}</strong>
+      </div>
+    `;
+
+    steps.className = "equipment-step-list";
+
+    tutorial.steps.forEach((step, index) => {
+      const item = document.createElement("li");
+      item.textContent = `${index + 1}. ${step}`;
+      steps.appendChild(item);
+    });
+
+    card.appendChild(heading);
+    card.appendChild(subtitle);
+    card.appendChild(meta);
+    card.appendChild(steps);
+    equipmentGrid.appendChild(card);
+  });
+}
+
 goalCards.forEach((card) => {
   card.addEventListener("click", () => {
     setActiveGoal(card.dataset.goal);
@@ -1844,6 +2078,22 @@ clearMacroLogButton.addEventListener("click", () => {
 
 historyDayInput.addEventListener("change", updateHistoryExerciseOptions);
 
+equipmentFilters.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement) || !target.dataset.filter) {
+    return;
+  }
+
+  activeEquipmentFilter = target.dataset.filter;
+
+  Array.from(equipmentFilters.querySelectorAll(".filter-chip")).forEach((button) => {
+    button.classList.toggle("active", button.dataset.filter === activeEquipmentFilter);
+  });
+
+  renderEquipmentTutorials();
+});
+
 historyForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -1932,6 +2182,7 @@ renderProgressTracker();
 renderWorkoutPlan();
 renderMacroLog();
 renderWorkoutHistory();
+renderEquipmentTutorials();
 initializeProgressForm();
 initializeMacroForm();
 initializeHistoryForm();

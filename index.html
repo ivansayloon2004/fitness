@@ -24,6 +24,7 @@
             <a class="primary-button" href="#coach-builder">Build my plan</a>
             <a class="ghost-button" href="#progress-tracker">Track progress</a>
             <a class="ghost-button" href="#workout-planner">Plan workouts</a>
+            <a class="ghost-button" href="#equipment-tutorials">Learn equipment</a>
             <a class="ghost-button" href="#weekly-dashboard">See dashboard</a>
           </div>
         </div>
@@ -31,7 +32,7 @@
         <aside class="hero-panel">
           <div class="hero-panel-header">
             <p>Coach snapshot</p>
-            <span>Version 3</span>
+            <span>Version 4</span>
           </div>
           <ul class="snapshot-list">
             <li>
@@ -49,6 +50,10 @@
             <li>
               <strong>Workout planner</strong>
               <span>Build your week with daily exercises, sets, reps, and smart splits.</span>
+            </li>
+            <li>
+              <strong>Equipment tutorials</strong>
+              <span>Learn how to set up and safely use common gym equipment.</span>
             </li>
             <li>
               <strong>Macro tracker</strong>
@@ -483,6 +488,47 @@
               </div>
 
               <div id="workout-days" class="workout-days"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="equipment-tutorials" class="panel equipment-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Equipment tutorials</p>
+            <h2>Learn how to use gym equipment with quick setup and safety steps.</h2>
+            <p>
+              Pick a category and the coach will show beginner-friendly tutorials
+              for common machines, free weights, and cardio tools.
+            </p>
+          </div>
+
+          <div class="equipment-layout">
+            <article class="equipment-sidebar">
+              <div class="card-heading">
+                <p class="eyebrow">Find a tutorial</p>
+                <h3>Choose equipment type</h3>
+              </div>
+
+              <div id="equipment-filters" class="equipment-filters">
+                <button class="filter-chip active" type="button" data-filter="all">All</button>
+                <button class="filter-chip" type="button" data-filter="free_weights">Free weights</button>
+                <button class="filter-chip" type="button" data-filter="machines">Machines</button>
+                <button class="filter-chip" type="button" data-filter="cables">Cables</button>
+                <button class="filter-chip" type="button" data-filter="cardio">Cardio</button>
+                <button class="filter-chip" type="button" data-filter="accessories">Accessories</button>
+              </div>
+
+              <div class="equipment-note-card">
+                <p class="eyebrow">Coach tip</p>
+                <h3 id="equipment-count">0 tutorials</h3>
+                <p id="equipment-note" class="helper-copy">
+                  Start with lighter loads and master setup before increasing weight.
+                </p>
+              </div>
+            </article>
+
+            <article class="equipment-library">
+              <div id="equipment-grid" class="equipment-grid"></div>
             </article>
           </div>
         </section>
