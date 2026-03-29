@@ -443,7 +443,9 @@ const smartWorkoutBlueprints = {
 const STORAGE_KEYS = {
   food: "pulseforge-food-log",
   progress: "pulseforge-progress",
-  workout: "pulseforge-workout"
+  workout: "pulseforge-workout",
+  macros: "pulseforge-macro-log",
+  workoutHistory: "pulseforge-workout-history"
 };
 
 const coachForm = document.getElementById("coach-form");
@@ -479,10 +481,57 @@ const clearWorkoutPlanButton = document.getElementById("clear-workout-plan");
 const workoutDaysContainer = document.getElementById("workout-days");
 const workoutStatus = document.getElementById("workout-status");
 
+const macroForm = document.getElementById("macro-form");
+const macroDateInput = document.getElementById("macro-date");
+const macroMealTypeInput = document.getElementById("macro-meal-type");
+const macroMealNameInput = document.getElementById("macro-meal-name");
+const macroProteinInput = document.getElementById("macro-protein");
+const macroCarbsInput = document.getElementById("macro-carbs");
+const macroFatInput = document.getElementById("macro-fat");
+const macroPreviewCalories = document.getElementById("macro-preview-calories");
+const macroPreviewNote = document.getElementById("macro-preview-note");
+const macroTotalCalories = document.getElementById("macro-total-calories");
+const macroTotalProtein = document.getElementById("macro-total-protein");
+const macroTotalCarbs = document.getElementById("macro-total-carbs");
+const macroTotalFat = document.getElementById("macro-total-fat");
+const macroRemaining = document.getElementById("macro-remaining");
+const macroLogList = document.getElementById("macro-log");
+const clearMacroLogButton = document.getElementById("clear-macro-log");
+const macroStatus = document.getElementById("macro-status");
+
+const historyForm = document.getElementById("history-form");
+const historyDateInput = document.getElementById("history-date");
+const historyDayInput = document.getElementById("history-day");
+const historyExerciseInput = document.getElementById("history-exercise");
+const historyCustomExerciseInput = document.getElementById("history-custom-exercise");
+const historyWeightInput = document.getElementById("history-weight");
+const historySetsInput = document.getElementById("history-sets");
+const historyRepsInput = document.getElementById("history-reps");
+const historyNotesInput = document.getElementById("history-notes");
+const historyLogList = document.getElementById("history-log");
+const clearHistoryLogButton = document.getElementById("clear-history-log");
+const historyStatus = document.getElementById("history-status");
+const historyTotalSessions = document.getElementById("history-total-sessions");
+const historyTotalExercises = document.getElementById("history-total-exercises");
+const historyBestWeight = document.getElementById("history-best-weight");
+const historyLastWorkout = document.getElementById("history-last-workout");
+
+const dashboardCheckins = document.getElementById("dashboard-checkins");
+const dashboardWorkouts = document.getElementById("dashboard-workouts");
+const dashboardAverageCalories = document.getElementById("dashboard-average-calories");
+const dashboardProteinDays = document.getElementById("dashboard-protein-days");
+const dashboardBodyTrend = document.getElementById("dashboard-body-trend");
+const dashboardTrainingTrend = document.getElementById("dashboard-training-trend");
+const dashboardCalorieBars = document.getElementById("dashboard-calorie-bars");
+const dashboardWorkoutBars = document.getElementById("dashboard-workout-bars");
+const dashboardHighlights = document.getElementById("dashboard-highlights");
+
 let currentPlan = null;
 let foodLog = [];
 let progressEntries = [];
 let workoutPlan = {};
+let macroLogEntries = [];
+let workoutHistoryEntries = [];
 let pendingProgressPhoto = "";
 
 function loadState(key, fallback) {
@@ -570,9 +619,14 @@ function formatDateLabel(dateString) {
 }
 
 function getTodayIsoString() {
+  return toLocalIsoDate(new Date());
+}
+
+function toLocalIsoDate(date) {
   const now = new Date();
-  const offset = now.getTimezoneOffset();
-  return new Date(now.getTime() - (offset * 60000)).toISOString().slice(0, 10);
+  const source = date || now;
+  const offset = source.getTimezoneOffset();
+  return new Date(source.getTime() - (offset * 60000)).toISOString().slice(0, 10);
 }
 
 function setStatus(element, message, tone = "neutral") {
@@ -748,6 +802,8 @@ function renderPlan(plan) {
 
   updateFoodPreview();
   renderFoodLog();
+  renderMacroLog();
+  renderWeeklyDashboard();
 }
 
 function populateFoodSelect() {
@@ -1011,6 +1067,7 @@ function renderProgressTracker() {
     document.getElementById("waist-change").textContent = "--";
     renderProgressGallery(sortedEntries);
     renderProgressLog(sortedEntries);
+    renderWeeklyDashboard();
     return;
   }
 
@@ -1026,6 +1083,7 @@ function renderProgressTracker() {
 
   renderProgressGallery(sortedEntries);
   renderProgressLog(sortedEntries);
+  renderWeeklyDashboard();
 }
 
 function saveWorkoutPlan() {
@@ -1143,6 +1201,9 @@ function renderWorkoutPlan() {
 
     workoutDaysContainer.appendChild(dayCard);
   });
+
+  updateHistoryExerciseOptions();
+  renderWeeklyDashboard();
 }
 
 function initializeProgressForm() {
@@ -1156,6 +1217,351 @@ function initializeProgressForm() {
   }
 
   progressWeightInput.value = Number(document.getElementById("weight").value).toFixed(1);
+}
+
+function getMacroCaloriesFromValues(protein, carbs, fat) {
+  return Math.round((protein * 4) + (carbs * 4) + (fat * 9));
+}
+
+function getMacroTotalsForDate(dateString) {
+  return macroLogEntries.reduce(
+    (totals, entry) => {
+      if (entry.date !== dateString) {
+        return totals;
+      }
+
+      totals.protein += entry.protein;
+      totals.carbs += entry.carbs;
+      totals.fat += entry.fat;
+      totals.calories += entry.calories;
+      return totals;
+    },
+    { protein: 0, carbs: 0, fat: 0, calories: 0 }
+  );
+}
+
+function updateMacroPreview() {
+  const protein = Number(macroProteinInput.value) || 0;
+  const carbs = Number(macroCarbsInput.value) || 0;
+  const fat = Number(macroFatInput.value) || 0;
+  const calories = getMacroCaloriesFromValues(protein, carbs, fat);
+
+  macroPreviewCalories.textContent = formatCalories(calories);
+  macroPreviewNote.textContent = `${protein}g protein | ${carbs}g carbs | ${fat}g fat`;
+}
+
+function renderMacroRemainingCards(totals) {
+  macroRemaining.innerHTML = "";
+
+  const targets = currentPlan
+    ? [
+        { label: "Calories left", value: currentPlan.targetCalories - totals.calories, unit: "kcal" },
+        { label: "Protein left", value: currentPlan.protein - totals.protein, unit: "g" },
+        { label: "Carbs left", value: currentPlan.carbs - totals.carbs, unit: "g" },
+        { label: "Fat left", value: currentPlan.fat - totals.fat, unit: "g" }
+      ]
+    : [
+        { label: "Calories left", value: 0, unit: "kcal" },
+        { label: "Protein left", value: 0, unit: "g" },
+        { label: "Carbs left", value: 0, unit: "g" },
+        { label: "Fat left", value: 0, unit: "g" }
+      ];
+
+  targets.forEach((target) => {
+    const card = document.createElement("div");
+    card.className = "remaining-card";
+
+    const label = document.createElement("span");
+    const value = document.createElement("strong");
+    const roundedValue = target.unit === "kcal" ? Math.round(target.value) : Math.round(target.value);
+
+    label.textContent = target.label;
+    value.textContent =
+      roundedValue < 0
+        ? `${Math.abs(roundedValue)} ${target.unit} over`
+        : `${roundedValue} ${target.unit}`;
+
+    card.appendChild(label);
+    card.appendChild(value);
+    macroRemaining.appendChild(card);
+  });
+}
+
+function renderMacroLog() {
+  const today = getTodayIsoString();
+  const totals = getMacroTotalsForDate(today);
+  const sortedEntries = [...macroLogEntries].sort((left, right) => {
+    if (left.date === right.date) {
+      return (right.createdAt || 0) - (left.createdAt || 0);
+    }
+
+    return right.date.localeCompare(left.date);
+  });
+
+  macroTotalCalories.textContent = formatCalories(totals.calories);
+  macroTotalProtein.textContent = `${Math.round(totals.protein)} g`;
+  macroTotalCarbs.textContent = `${Math.round(totals.carbs)} g`;
+  macroTotalFat.textContent = `${Math.round(totals.fat)} g`;
+  renderMacroRemainingCards(totals);
+
+  macroLogList.innerHTML = "";
+
+  if (!sortedEntries.length) {
+    macroLogList.innerHTML = `
+      <li>
+        <div>
+          <strong>No macro meals yet</strong>
+          <span>Add your first meal to start tracking protein, carbs, fats, and calories.</span>
+        </div>
+      </li>
+    `;
+    return;
+  }
+
+  sortedEntries.slice(0, 10).forEach((entry) => {
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `
+      <div>
+        <strong>${entry.mealType}: ${entry.mealName}</strong>
+        <span>${formatDateLabel(entry.date)} | ${entry.protein}P / ${entry.carbs}C / ${entry.fat}F | ${formatCalories(entry.calories)}</span>
+      </div>
+      <button type="button" data-id="${entry.id}">Remove</button>
+    `;
+    macroLogList.appendChild(listItem);
+  });
+}
+
+function updateHistoryExerciseOptions() {
+  const selectedDay = historyDayInput.value;
+  const exercises = workoutPlan[selectedDay] || [];
+
+  historyExerciseInput.innerHTML = "";
+
+  if (!exercises.length) {
+    const option = document.createElement("option");
+    option.value = "__custom__";
+    option.textContent = "No planned exercise";
+    historyExerciseInput.appendChild(option);
+    return;
+  }
+
+  exercises.forEach((exercise) => {
+    const option = document.createElement("option");
+    option.value = exercise.name;
+    option.textContent = `${exercise.name} (${exercise.sets} x ${exercise.reps})`;
+    historyExerciseInput.appendChild(option);
+  });
+
+  const customOption = document.createElement("option");
+  customOption.value = "__custom__";
+  customOption.textContent = "Custom exercise";
+  historyExerciseInput.appendChild(customOption);
+}
+
+function renderWorkoutHistory() {
+  const sortedEntries = [...workoutHistoryEntries].sort((left, right) => {
+    if (left.date === right.date) {
+      return (right.createdAt || 0) - (left.createdAt || 0);
+    }
+
+    return right.date.localeCompare(left.date);
+  });
+
+  const sessionKeys = new Set(sortedEntries.map((entry) => `${entry.date}-${entry.day}`));
+  const bestWeightEntry = sortedEntries.reduce((best, entry) => {
+    if (!best || entry.weight > best.weight) {
+      return entry;
+    }
+
+    return best;
+  }, null);
+
+  historyTotalSessions.textContent = sessionKeys.size;
+  historyTotalExercises.textContent = sortedEntries.length;
+  historyBestWeight.textContent = bestWeightEntry ? `${bestWeightEntry.weight.toFixed(1)} kg` : "0 kg";
+  historyLastWorkout.textContent = sortedEntries.length ? formatDateLabel(sortedEntries[0].date) : "--";
+
+  historyLogList.innerHTML = "";
+
+  if (!sortedEntries.length) {
+    historyLogList.innerHTML = `
+      <li>
+        <div>
+          <strong>No workout history yet</strong>
+          <span>Log a completed exercise to start building your lifting history.</span>
+        </div>
+      </li>
+    `;
+    return;
+  }
+
+  sortedEntries.slice(0, 10).forEach((entry) => {
+    const listItem = document.createElement("li");
+    const noteLabel = entry.notes ? ` | ${entry.notes}` : "";
+    listItem.innerHTML = `
+      <div>
+        <strong>${entry.exercise}</strong>
+        <span>${formatDateLabel(entry.date)} | ${entry.day} | ${entry.weight.toFixed(1)} kg | ${entry.setsCompleted} set(s) x ${entry.repsCompleted}${noteLabel}</span>
+      </div>
+      <button type="button" data-id="${entry.id}">Remove</button>
+    `;
+    historyLogList.appendChild(listItem);
+  });
+}
+
+function getLastSevenDates() {
+  const dates = [];
+  const today = new Date();
+
+  for (let index = 6; index >= 0; index -= 1) {
+    const current = new Date(today);
+    current.setDate(today.getDate() - index);
+    dates.push(toLocalIsoDate(current));
+  }
+
+  return dates;
+}
+
+function buildBarRow(labelText, valueText, widthPercent, warning = false) {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+
+  const meta = document.createElement("div");
+  meta.className = "bar-meta";
+
+  const label = document.createElement("span");
+  label.className = "bar-label";
+  label.textContent = labelText;
+
+  const value = document.createElement("span");
+  value.className = "bar-value";
+  value.textContent = valueText;
+
+  const track = document.createElement("div");
+  track.className = "bar-track";
+
+  const fill = document.createElement("div");
+  fill.className = `bar-fill${warning ? " warning" : ""}`;
+  fill.style.width = `${Math.max(6, Math.min(widthPercent, 100))}%`;
+
+  meta.appendChild(label);
+  meta.appendChild(value);
+  track.appendChild(fill);
+  row.appendChild(meta);
+  row.appendChild(track);
+
+  return row;
+}
+
+function renderWeeklyDashboard() {
+  const lastSevenDates = getLastSevenDates();
+  const recentProgress = getSortedProgressEntries().filter((entry) => lastSevenDates.includes(entry.date));
+  const recentWorkouts = workoutHistoryEntries.filter((entry) => lastSevenDates.includes(entry.date));
+  const sessionKeys = new Set(recentWorkouts.map((entry) => `${entry.date}-${entry.day}`));
+
+  const dailyMacroTotals = lastSevenDates.map((date) => ({
+    date,
+    ...getMacroTotalsForDate(date)
+  }));
+
+  const loggedMacroDays = dailyMacroTotals.filter((day) => day.calories > 0);
+  const averageCalories = loggedMacroDays.length
+    ? Math.round(loggedMacroDays.reduce((sum, day) => sum + day.calories, 0) / loggedMacroDays.length)
+    : 0;
+
+  const proteinGoalDays = currentPlan
+    ? dailyMacroTotals.filter((day) => day.protein >= (currentPlan.protein * 0.85)).length
+    : 0;
+
+  dashboardCheckins.textContent = recentProgress.length;
+  dashboardWorkouts.textContent = sessionKeys.size;
+  dashboardAverageCalories.textContent = formatCalories(averageCalories);
+  dashboardProteinDays.textContent = proteinGoalDays;
+
+  if (recentProgress.length >= 2) {
+    const newest = recentProgress[0];
+    const oldest = recentProgress[recentProgress.length - 1];
+    dashboardBodyTrend.textContent =
+      `Across the last 7 days, your weight moved ${formatChange(newest.weight - oldest.weight, "kg")} and your waist moved ${formatChange(newest.waist - oldest.waist, "cm")}.`;
+  } else {
+    dashboardBodyTrend.textContent =
+      "Add at least two check-ins in the week to see how your body trend is moving.";
+  }
+
+  const plannedDays = countPlannedDays();
+  dashboardTrainingTrend.textContent =
+    sessionKeys.size > 0
+      ? `You logged ${sessionKeys.size} workout session(s) this week against ${plannedDays} planned day(s).`
+      : "Log completed sessions to compare your actual work against the plan.";
+
+  dashboardCalorieBars.innerHTML = "";
+  dailyMacroTotals.forEach((day) => {
+    const dayLabel = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(
+      new Date(`${day.date}T00:00:00`)
+    );
+    const target = currentPlan ? currentPlan.targetCalories : Math.max(day.calories, 1);
+    const width = target > 0 ? (day.calories / target) * 100 : 0;
+    dashboardCalorieBars.appendChild(
+      buildBarRow(dayLabel, formatCalories(day.calories), width || 6, day.calories > target)
+    );
+  });
+
+  dashboardWorkoutBars.innerHTML = "";
+  const maxSessionsOnDay = Math.max(
+    1,
+    ...lastSevenDates.map((date) => {
+      return new Set(
+        recentWorkouts
+          .filter((entry) => entry.date === date)
+          .map((entry) => `${entry.date}-${entry.day}`)
+      ).size;
+    })
+  );
+
+  lastSevenDates.forEach((date) => {
+    const dayLabel = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(
+      new Date(`${date}T00:00:00`)
+    );
+    const sessions = new Set(
+      recentWorkouts
+        .filter((entry) => entry.date === date)
+        .map((entry) => `${entry.date}-${entry.day}`)
+    ).size;
+
+    dashboardWorkoutBars.appendChild(
+      buildBarRow(dayLabel, `${sessions} session(s)`, (sessions / maxSessionsOnDay) * 100 || 6)
+    );
+  });
+
+  dashboardHighlights.innerHTML = "";
+
+  const highlights = [
+    currentPlan
+      ? `Target check: your plan is set to ${formatCalories(currentPlan.targetCalories)} with ${currentPlan.protein}g protein as the daily anchor.`
+      : "Build your smart coach plan to unlock target-aware dashboard insights.",
+    sessionKeys.size >= plannedDays && plannedDays > 0
+      ? "Training consistency is strong this week. You matched or exceeded the number of planned training days."
+      : `You have completed ${sessionKeys.size} workout session(s) against ${plannedDays} planned day(s) this week.`,
+    proteinGoalDays > 0
+      ? `You hit your protein threshold on ${proteinGoalDays} of the last 7 days.`
+      : "No protein-target days logged yet. Use the macro tracker to improve nutrition consistency."
+  ];
+
+  highlights.forEach((text) => {
+    const item = document.createElement("li");
+    item.textContent = text;
+    dashboardHighlights.appendChild(item);
+  });
+}
+
+function initializeMacroForm() {
+  macroDateInput.value = getTodayIsoString();
+  updateMacroPreview();
+}
+
+function initializeHistoryForm() {
+  historyDateInput.value = getTodayIsoString();
+  updateHistoryExerciseOptions();
 }
 
 goalCards.forEach((card) => {
@@ -1372,6 +1778,137 @@ workoutDaysContainer.addEventListener("click", (event) => {
   setStatus(workoutStatus, "Exercise removed from the planner.", "success");
 });
 
+[macroProteinInput, macroCarbsInput, macroFatInput].forEach((input) => {
+  input.addEventListener("input", updateMacroPreview);
+});
+
+macroForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const protein = Number(macroProteinInput.value) || 0;
+  const carbs = Number(macroCarbsInput.value) || 0;
+  const fat = Number(macroFatInput.value) || 0;
+  const mealName = macroMealNameInput.value.trim();
+
+  if (!mealName) {
+    setStatus(macroStatus, "Add a meal name before saving macros.", "error");
+    return;
+  }
+
+  const entry = {
+    id: `macro-${Date.now()}`,
+    date: macroDateInput.value,
+    mealType: macroMealTypeInput.value,
+    mealName,
+    protein,
+    carbs,
+    fat,
+    calories: getMacroCaloriesFromValues(protein, carbs, fat),
+    createdAt: Date.now()
+  };
+
+  macroLogEntries.unshift(entry);
+  saveState(STORAGE_KEYS.macros, macroLogEntries);
+  renderMacroLog();
+  renderWeeklyDashboard();
+  macroForm.reset();
+  macroDateInput.value = getTodayIsoString();
+  macroProteinInput.value = 35;
+  macroCarbsInput.value = 45;
+  macroFatInput.value = 12;
+  updateMacroPreview();
+  setStatus(macroStatus, "Macro meal saved.", "success");
+});
+
+macroLogList.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement) || !target.dataset.id) {
+    return;
+  }
+
+  macroLogEntries = macroLogEntries.filter((entry) => entry.id !== target.dataset.id);
+  saveState(STORAGE_KEYS.macros, macroLogEntries);
+  renderMacroLog();
+  renderWeeklyDashboard();
+  setStatus(macroStatus, "Macro meal removed.", "success");
+});
+
+clearMacroLogButton.addEventListener("click", () => {
+  macroLogEntries = [];
+  saveState(STORAGE_KEYS.macros, macroLogEntries);
+  renderMacroLog();
+  renderWeeklyDashboard();
+  setStatus(macroStatus, "Macro log cleared.", "success");
+});
+
+historyDayInput.addEventListener("change", updateHistoryExerciseOptions);
+
+historyForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const chosenExercise =
+    historyCustomExerciseInput.value.trim() ||
+    (historyExerciseInput.value !== "__custom__" ? historyExerciseInput.value : "");
+
+  if (!chosenExercise) {
+    setStatus(historyStatus, "Choose a planned exercise or type a custom one.", "error");
+    return;
+  }
+
+  const entry = {
+    id: `history-${Date.now()}`,
+    date: historyDateInput.value,
+    day: historyDayInput.value,
+    exercise: chosenExercise,
+    weight: Number(historyWeightInput.value) || 0,
+    setsCompleted: Number(historySetsInput.value) || 0,
+    repsCompleted: historyRepsInput.value.trim(),
+    notes: historyNotesInput.value.trim(),
+    createdAt: Date.now()
+  };
+
+  if (!entry.setsCompleted || !entry.repsCompleted) {
+    setStatus(historyStatus, "Add the completed sets and reps before saving.", "error");
+    return;
+  }
+
+  workoutHistoryEntries.unshift(entry);
+  saveState(STORAGE_KEYS.workoutHistory, workoutHistoryEntries);
+  renderWorkoutHistory();
+  renderWeeklyDashboard();
+  historyForm.reset();
+  historyDateInput.value = getTodayIsoString();
+  historyDayInput.value = "Monday";
+  historyWeightInput.value = 0;
+  historySetsInput.value = 4;
+  historyRepsInput.value = "8-10";
+  updateHistoryExerciseOptions();
+  setStatus(historyStatus, "Workout history saved.", "success");
+});
+
+historyLogList.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement) || !target.dataset.id) {
+    return;
+  }
+
+  workoutHistoryEntries = workoutHistoryEntries.filter((entry) => entry.id !== target.dataset.id);
+  saveState(STORAGE_KEYS.workoutHistory, workoutHistoryEntries);
+  renderWorkoutHistory();
+  renderWeeklyDashboard();
+  setStatus(historyStatus, "Workout history entry removed.", "success");
+});
+
+clearHistoryLogButton.addEventListener("click", () => {
+  workoutHistoryEntries = [];
+  saveState(STORAGE_KEYS.workoutHistory, workoutHistoryEntries);
+  renderWorkoutHistory();
+  renderWeeklyDashboard();
+  setStatus(historyStatus, "Workout history cleared.", "success");
+});
+
 document.getElementById("weight").addEventListener("input", () => {
   if (!progressEntries.length) {
     progressWeightInput.value = document.getElementById("weight").value;
@@ -1383,13 +1920,21 @@ progressEntries = Array.isArray(loadState(STORAGE_KEYS.progress, []))
   ? loadState(STORAGE_KEYS.progress, [])
   : [];
 workoutPlan = normalizeWorkoutPlan(loadState(STORAGE_KEYS.workout, getEmptyWorkoutPlan()));
+macroLogEntries = Array.isArray(loadState(STORAGE_KEYS.macros, [])) ? loadState(STORAGE_KEYS.macros, []) : [];
+workoutHistoryEntries = Array.isArray(loadState(STORAGE_KEYS.workoutHistory, []))
+  ? loadState(STORAGE_KEYS.workoutHistory, [])
+  : [];
 
 populateFoodSelect();
 setActiveGoal(goalInput.value);
 renderPlan(calculatePlan());
 renderProgressTracker();
 renderWorkoutPlan();
+renderMacroLog();
+renderWorkoutHistory();
 initializeProgressForm();
+initializeMacroForm();
+initializeHistoryForm();
 
 if (progressEntries.length) {
   syncCoachWeightWithLatestProgress();

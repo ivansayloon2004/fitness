@@ -24,13 +24,14 @@
             <a class="primary-button" href="#coach-builder">Build my plan</a>
             <a class="ghost-button" href="#progress-tracker">Track progress</a>
             <a class="ghost-button" href="#workout-planner">Plan workouts</a>
+            <a class="ghost-button" href="#weekly-dashboard">See dashboard</a>
           </div>
         </div>
 
         <aside class="hero-panel">
           <div class="hero-panel-header">
             <p>Coach snapshot</p>
-            <span>Version 2</span>
+            <span>Version 3</span>
           </div>
           <ul class="snapshot-list">
             <li>
@@ -48,6 +49,18 @@
             <li>
               <strong>Workout planner</strong>
               <span>Build your week with daily exercises, sets, reps, and smart splits.</span>
+            </li>
+            <li>
+              <strong>Macro tracker</strong>
+              <span>Log protein, carbs, fats, and calories against your coach targets.</span>
+            </li>
+            <li>
+              <strong>Workout history</strong>
+              <span>Save completed sets, reps, weights used, and session notes.</span>
+            </li>
+            <li>
+              <strong>Weekly dashboard</strong>
+              <span>See trends for check-ins, macros, calories, and training consistency.</span>
             </li>
             <li>
               <strong>Food radar</strong>
@@ -471,6 +484,339 @@
 
               <div id="workout-days" class="workout-days"></div>
             </article>
+          </div>
+        </section>
+
+        <section id="macro-tracker" class="panel macro-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Macro tracker</p>
+            <h2>Log protein, carbs, fats, and calorie intake by meal.</h2>
+            <p>
+              Track your meals against the smart coach targets so you can see
+              exactly how much nutrition is left for the day.
+            </p>
+          </div>
+
+          <div class="macro-layout">
+            <article class="macro-builder">
+              <div class="card-heading">
+                <p class="eyebrow">Meal log</p>
+                <h3>Add a meal entry</h3>
+              </div>
+
+              <form id="macro-form" class="macro-form">
+                <div class="macro-form-grid">
+                  <label>
+                    Date
+                    <input id="macro-date" name="macro-date" type="date" required />
+                  </label>
+
+                  <label>
+                    Meal
+                    <select id="macro-meal-type" name="macro-meal-type">
+                      <option value="Breakfast">Breakfast</option>
+                      <option value="Lunch">Lunch</option>
+                      <option value="Dinner">Dinner</option>
+                      <option value="Snack">Snack</option>
+                      <option value="Post-workout">Post-workout</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    Meal name
+                    <input
+                      id="macro-meal-name"
+                      name="macro-meal-name"
+                      type="text"
+                      maxlength="60"
+                      placeholder="Chicken rice bowl"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    Protein (g)
+                    <input id="macro-protein" name="macro-protein" type="number" min="0" max="300" value="35" required />
+                  </label>
+
+                  <label>
+                    Carbs (g)
+                    <input id="macro-carbs" name="macro-carbs" type="number" min="0" max="500" value="45" required />
+                  </label>
+
+                  <label>
+                    Fat (g)
+                    <input id="macro-fat" name="macro-fat" type="number" min="0" max="200" value="12" required />
+                  </label>
+                </div>
+
+                <div class="macro-preview-card">
+                  <div>
+                    <p class="eyebrow">Meal calories</p>
+                    <h3 id="macro-preview-calories">0 kcal</h3>
+                  </div>
+                  <p id="macro-preview-note" class="helper-copy">
+                    Calories are calculated automatically from your macros.
+                  </p>
+                </div>
+
+                <button class="primary-button" type="submit">Add macro meal</button>
+              </form>
+
+              <p id="macro-status" class="status-line">
+                Macro entries stay in this browser and update your dashboard automatically.
+              </p>
+            </article>
+
+            <article class="macro-summary-card">
+              <div class="planner-stats macro-stats">
+                <div class="planner-stat">
+                  <span>Logged calories</span>
+                  <strong id="macro-total-calories">0 kcal</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Protein today</span>
+                  <strong id="macro-total-protein">0 g</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Carbs today</span>
+                  <strong id="macro-total-carbs">0 g</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Fat today</span>
+                  <strong id="macro-total-fat">0 g</strong>
+                </div>
+              </div>
+
+              <div class="macro-remaining-card">
+                <div class="card-heading">
+                  <p class="eyebrow">Remaining targets</p>
+                  <h3>What is left for today</h3>
+                </div>
+                <div id="macro-remaining" class="macro-remaining-grid"></div>
+              </div>
+
+              <div class="tracker-history">
+                <div class="card-heading">
+                  <p class="eyebrow">Recent meals</p>
+                  <h3>Macro meal log</h3>
+                </div>
+                <ul id="macro-log" class="macro-log"></ul>
+                <button id="clear-macro-log" class="ghost-button subtle" type="button">
+                  Clear macro log
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="workout-history" class="panel history-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Workout history</p>
+            <h2>Record what you actually lifted, completed, and improved.</h2>
+            <p>
+              Use your planner as the starting point, then save completed sets,
+              reps, weights, and notes to build a real training history.
+            </p>
+          </div>
+
+          <div class="history-layout">
+            <article class="history-builder">
+              <div class="card-heading">
+                <p class="eyebrow">Session log</p>
+                <h3>Save a completed workout exercise</h3>
+              </div>
+
+              <form id="history-form" class="history-form">
+                <div class="history-form-grid">
+                  <label>
+                    Date
+                    <input id="history-date" name="history-date" type="date" required />
+                  </label>
+
+                  <label>
+                    Planned day
+                    <select id="history-day" name="history-day">
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                      <option value="Sunday">Sunday</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    Planned exercise
+                    <select id="history-exercise" name="history-exercise"></select>
+                  </label>
+
+                  <label>
+                    Or custom exercise
+                    <input
+                      id="history-custom-exercise"
+                      name="history-custom-exercise"
+                      type="text"
+                      maxlength="60"
+                      placeholder="Cable lateral raise"
+                    />
+                  </label>
+
+                  <label>
+                    Weight used (kg)
+                    <input id="history-weight" name="history-weight" type="number" min="0" max="500" step="0.5" value="0" />
+                  </label>
+
+                  <label>
+                    Sets completed
+                    <input id="history-sets" name="history-sets" type="number" min="1" max="20" value="4" required />
+                  </label>
+
+                  <label>
+                    Reps completed
+                    <input
+                      id="history-reps"
+                      name="history-reps"
+                      type="text"
+                      maxlength="20"
+                      value="8-10"
+                      placeholder="8-10"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    Notes
+                    <input
+                      id="history-notes"
+                      name="history-notes"
+                      type="text"
+                      maxlength="80"
+                      placeholder="Strong final set"
+                    />
+                  </label>
+                </div>
+
+                <button class="primary-button" type="submit">Save workout history</button>
+              </form>
+
+              <p id="history-status" class="status-line">
+                Completed sessions help the weekly dashboard show your real consistency.
+              </p>
+            </article>
+
+            <article class="history-summary-card">
+              <div class="planner-stats history-stats">
+                <div class="planner-stat">
+                  <span>Total sessions</span>
+                  <strong id="history-total-sessions">0</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Exercises logged</span>
+                  <strong id="history-total-exercises">0</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Best weight</span>
+                  <strong id="history-best-weight">0 kg</strong>
+                </div>
+                <div class="planner-stat">
+                  <span>Last workout</span>
+                  <strong id="history-last-workout">--</strong>
+                </div>
+              </div>
+
+              <div class="tracker-history">
+                <div class="card-heading">
+                  <p class="eyebrow">Recent history</p>
+                  <h3>Completed workout log</h3>
+                </div>
+                <ul id="history-log" class="history-log"></ul>
+                <button id="clear-history-log" class="ghost-button subtle" type="button">
+                  Clear workout history
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="weekly-dashboard" class="panel dashboard-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Weekly dashboard</p>
+            <h2>See your last 7 days of nutrition, training, and body changes.</h2>
+            <p>
+              The dashboard combines progress check-ins, macro logs, workout
+              history, and your plan targets into one weekly pulse.
+            </p>
+          </div>
+
+          <div class="dashboard-layout">
+            <div class="planner-stats dashboard-stats">
+              <div class="planner-stat">
+                <span>Check-ins this week</span>
+                <strong id="dashboard-checkins">0</strong>
+              </div>
+              <div class="planner-stat">
+                <span>Workout sessions</span>
+                <strong id="dashboard-workouts">0</strong>
+              </div>
+              <div class="planner-stat">
+                <span>Average calories</span>
+                <strong id="dashboard-average-calories">0 kcal</strong>
+              </div>
+              <div class="planner-stat">
+                <span>Protein goal days</span>
+                <strong id="dashboard-protein-days">0</strong>
+              </div>
+            </div>
+
+            <div class="insight-grid">
+              <article class="insight-card">
+                <div class="card-heading">
+                  <p class="eyebrow">Body trend</p>
+                  <h3>7-day body signal</h3>
+                </div>
+                <p id="dashboard-body-trend" class="insight-copy">
+                  Add a check-in to start seeing how your body is changing week to week.
+                </p>
+              </article>
+
+              <article class="insight-card">
+                <div class="card-heading">
+                  <p class="eyebrow">Training trend</p>
+                  <h3>Weekly consistency</h3>
+                </div>
+                <p id="dashboard-training-trend" class="insight-copy">
+                  Log completed workouts to measure how consistently you are training.
+                </p>
+              </article>
+            </div>
+
+            <div class="dashboard-grid">
+              <article class="dashboard-card">
+                <div class="card-heading">
+                  <p class="eyebrow">Nutrition pulse</p>
+                  <h3>Calories vs target</h3>
+                </div>
+                <div id="dashboard-calorie-bars" class="bar-list"></div>
+              </article>
+
+              <article class="dashboard-card">
+                <div class="card-heading">
+                  <p class="eyebrow">Workout pulse</p>
+                  <h3>Sessions by day</h3>
+                </div>
+                <div id="dashboard-workout-bars" class="bar-list"></div>
+              </article>
+
+              <article class="dashboard-card wide">
+                <div class="card-heading">
+                  <p class="eyebrow">Coach readout</p>
+                  <h3>Weekly summary</h3>
+                </div>
+                <ul id="dashboard-highlights" class="dashboard-highlights"></ul>
+              </article>
+            </div>
           </div>
         </section>
 
