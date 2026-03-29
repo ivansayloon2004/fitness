@@ -1,0 +1,627 @@
+:root {
+  --bg: #f6f1e8;
+  --bg-deep: #10241e;
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface-strong: #fffdf8;
+  --line: rgba(16, 36, 30, 0.12);
+  --text: #18281f;
+  --muted: #52675a;
+  --accent: #ff6a3d;
+  --secondary: #1c8b68;
+  --shadow: 0 24px 80px rgba(16, 36, 30, 0.12);
+  --radius-lg: 28px;
+  --radius-md: 22px;
+  --radius-sm: 16px;
+  --max-width: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 106, 61, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(28, 139, 104, 0.16), transparent 24%),
+    linear-gradient(180deg, #f8f4ec 0%, #efe6d8 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(24, 40, 31, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 40, 31, 0.03) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 85%);
+}
+
+.page-shell {
+  width: min(var(--max-width), calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.hero,
+.panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 1.5rem;
+  padding: clamp(2rem, 4vw, 4rem);
+  background:
+    linear-gradient(135deg, rgba(16, 36, 30, 0.96), rgba(14, 26, 22, 0.94)),
+    linear-gradient(120deg, rgba(255, 106, 61, 0.2), transparent 60%);
+  color: #f8f2e8;
+}
+
+.hero::after,
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: auto auto -140px -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 106, 61, 0.16);
+  filter: blur(4px);
+}
+
+.hero-copy,
+.hero-panel,
+.panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1,
+.section-heading h2,
+.goal-picker h3,
+.card-heading h3,
+.food-preview h3 {
+  margin: 0;
+  font-family: "Space Grotesk", "Avenir Next", sans-serif;
+  line-height: 0.95;
+}
+
+.hero h1 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 7vw, 6rem);
+  letter-spacing: -0.05em;
+}
+
+.hero-text,
+.section-heading p,
+.goal-copy,
+.metric-card span,
+.coach-message-card p,
+.food-preview p,
+.food-log li span {
+  line-height: 1.6;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.hero-text {
+  max-width: 56ch;
+  margin: 1.25rem 0 0;
+  color: rgba(248, 242, 232, 0.82);
+  font-size: 1.02rem;
+}
+
+.hero-actions,
+.submit-button {
+  margin-top: 1.75rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.primary-button,
+.ghost-button,
+.goal-card,
+.subtle {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.primary-button,
+.ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: #fff8f2;
+  box-shadow: 0 12px 34px rgba(255, 106, 61, 0.24);
+}
+
+.ghost-button {
+  background: transparent;
+  color: inherit;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.panel {
+  margin-top: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(255, 249, 240, 0.82)),
+    rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+}
+
+.section-heading {
+  max-width: 62ch;
+}
+
+.section-heading h2 {
+  font-size: clamp(2.1rem, 4vw, 3.35rem);
+  letter-spacing: -0.04em;
+}
+
+.section-heading p {
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+}
+
+.coach-form {
+  margin-top: 1.75rem;
+}
+
+.form-grid,
+.goal-grid,
+.metric-grid,
+.results-layout,
+.food-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 0.55rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(16, 36, 30, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+}
+
+input:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(255, 106, 61, 0.32);
+  outline-offset: 2px;
+}
+
+.goal-picker {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at top right, rgba(28, 139, 104, 0.12), transparent 35%),
+    rgba(16, 36, 30, 0.04);
+}
+
+.goal-picker-text {
+  margin-bottom: 1rem;
+}
+
+.goal-picker h3 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.04em;
+}
+
+.goal-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.goal-card {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.15rem;
+  text-align: left;
+  border: 1px solid rgba(16, 36, 30, 0.1);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+}
+
+.goal-card.active {
+  background: linear-gradient(180deg, rgba(255, 106, 61, 0.18), rgba(255, 255, 255, 0.96));
+  border-color: rgba(255, 106, 61, 0.5);
+  box-shadow: 0 16px 34px rgba(255, 106, 61, 0.14);
+}
+
+.goal-name {
+  font-family: "Space Grotesk", "Avenir Next", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.submit-button {
+  min-width: 240px;
+}
+
+.metric-grid {
+  margin-top: 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric-card,
+.coach-message-card,
+.roadmap-card,
+.watch-card,
+.food-builder,
+.food-log-card,
+.hero-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.metric-card {
+  padding: 1.2rem;
+}
+
+.metric-card p,
+.food-totals span,
+.coach-focus span,
+.hero-panel-header p,
+.hero-panel-header span {
+  margin: 0;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.metric-card strong,
+.food-totals strong {
+  display: block;
+  margin: 0.55rem 0;
+  font-family: "Space Grotesk", "Avenir Next", sans-serif;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  letter-spacing: -0.05em;
+}
+
+.metric-card.accent {
+  background:
+    linear-gradient(160deg, rgba(255, 106, 61, 0.18), rgba(255, 248, 242, 0.98)),
+    rgba(255, 255, 255, 0.82);
+}
+
+.results-layout,
+.food-layout {
+  margin-top: 1rem;
+  grid-template-columns: 1.05fr 0.9fr 1fr;
+  align-items: start;
+}
+
+.coach-message-card,
+.roadmap-card,
+.watch-card,
+.food-builder,
+.food-log-card {
+  padding: 1.35rem;
+}
+
+.card-heading {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.card-heading .eyebrow {
+  color: var(--muted);
+}
+
+.coach-focus {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1.4rem;
+}
+
+.coach-focus div,
+.food-preview {
+  padding: 0.95rem;
+  border-radius: var(--radius-sm);
+  background: rgba(16, 36, 30, 0.04);
+}
+
+.coach-focus strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 1rem;
+}
+
+.roadmap-list,
+.swap-list,
+.snapshot-list,
+.food-log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.roadmap-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.roadmap-list li {
+  padding: 0.95rem 1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(28, 139, 104, 0.08);
+  border: 1px solid rgba(28, 139, 104, 0.1);
+}
+
+.watch-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.watch-item {
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 106, 61, 0.08);
+  border: 1px solid rgba(255, 106, 61, 0.14);
+}
+
+.watch-item strong,
+.food-log strong,
+.snapshot-list strong {
+  display: block;
+}
+
+.watch-item span,
+.food-log li span,
+.snapshot-list span {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.swap-box {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.swap-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.swap-list li {
+  padding: 0.7rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(28, 139, 104, 0.08);
+}
+
+.food-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.food-preview {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.food-preview strong {
+  font-family: "Space Grotesk", "Avenir Next", sans-serif;
+  font-size: 2rem;
+  letter-spacing: -0.05em;
+}
+
+.food-totals {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(16, 36, 30, 0.04);
+}
+
+.food-log {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.food-log li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(16, 36, 30, 0.08);
+}
+
+.food-log button {
+  border: 0;
+  background: rgba(16, 36, 30, 0.06);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.subtle {
+  border-color: rgba(16, 36, 30, 0.12);
+  color: var(--text);
+}
+
+.hero-panel {
+  padding: 1.3rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+}
+
+.hero-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.snapshot-list {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.snapshot-list li {
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.snapshot-list span,
+.hero-panel-header p,
+.hero-panel-header span {
+  color: rgba(248, 242, 232, 0.72);
+}
+
+.compact {
+  margin-bottom: 0.75rem;
+}
+
+.primary-button:hover,
+.ghost-button:hover,
+.goal-card:hover,
+.food-log button:hover {
+  transform: translateY(-2px);
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: revealUp 700ms ease forwards;
+}
+
+[data-reveal]:nth-of-type(2) {
+  animation-delay: 120ms;
+}
+
+[data-reveal]:nth-of-type(3) {
+  animation-delay: 240ms;
+}
+
+[data-reveal]:nth-of-type(4) {
+  animation-delay: 360ms;
+}
+
+@keyframes revealUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1050px) {
+  .hero,
+  .results-layout,
+  .food-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-grid,
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .page-shell {
+    width: min(var(--max-width), calc(100% - 1rem));
+    padding-top: 0.6rem;
+  }
+
+  .form-grid,
+  .goal-grid,
+  .metric-grid,
+  .coach-focus {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .ghost-button,
+  .submit-button {
+    width: 100%;
+  }
+}

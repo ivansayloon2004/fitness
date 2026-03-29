@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PulseForge Coach</title>
+    <meta
+      name="description"
+      content="Build a smart fitness plan with body transformation coaching, calorie targets, and food impact tracking."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero" data-reveal>
+        <div class="hero-copy">
+          <p class="eyebrow">Smart coach for real progress</p>
+          <h1>Build a fitness program that adapts to the body you want.</h1>
+          <p class="hero-text">
+            Choose your transformation goal, get a daily calorie target, and
+            see which foods help your progress or quietly slow it down.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#coach-builder">Build my plan</a>
+            <a class="ghost-button" href="#food-radar">Track food impact</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <div class="hero-panel-header">
+            <p>Coach snapshot</p>
+            <span>Version 1</span>
+          </div>
+          <ul class="snapshot-list">
+            <li>
+              <strong>Transformation selector</strong>
+              <span>Pick fat loss, recomposition, lean muscle, or power gain.</span>
+            </li>
+            <li>
+              <strong>Smart calorie target</strong>
+              <span>Daily calories and macro guidance based on your body stats.</span>
+            </li>
+            <li>
+              <strong>Food radar</strong>
+              <span>Check how many calories each food adds and what to limit.</span>
+            </li>
+          </ul>
+        </aside>
+      </header>
+
+      <main>
+        <section id="coach-builder" class="panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Coach builder</p>
+            <h2>Tell the coach where you are now.</h2>
+            <p>
+              This first version creates a practical plan from your stats,
+              activity level, and target body transformation.
+            </p>
+          </div>
+
+          <form id="coach-form" class="coach-form">
+            <div class="form-grid">
+              <label>
+                Age
+                <input id="age" name="age" type="number" min="15" max="80" value="27" required />
+              </label>
+
+              <label>
+                Height (cm)
+                <input
+                  id="height"
+                  name="height"
+                  type="number"
+                  min="130"
+                  max="230"
+                  value="170"
+                  required
+                />
+              </label>
+
+              <label>
+                Weight (kg)
+                <input
+                  id="weight"
+                  name="weight"
+                  type="number"
+                  min="35"
+                  max="250"
+                  step="0.1"
+                  value="72"
+                  required
+                />
+              </label>
+
+              <label>
+                Sex
+                <select id="sex" name="sex">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+
+              <label>
+                Daily activity
+                <select id="activity" name="activity">
+                  <option value="light">Lightly active</option>
+                  <option value="sedentary">Mostly sitting</option>
+                  <option value="moderate" selected>Moderately active</option>
+                  <option value="very">Very active</option>
+                </select>
+              </label>
+
+              <label>
+                Training days per week
+                <input
+                  id="training-days"
+                  name="training-days"
+                  type="number"
+                  min="2"
+                  max="6"
+                  value="4"
+                  required
+                />
+              </label>
+            </div>
+
+            <div class="goal-picker">
+              <div class="goal-picker-text">
+                <p class="eyebrow">Transformation target</p>
+                <h3>Choose what body transformation you want.</h3>
+              </div>
+
+              <div class="goal-grid" id="goal-grid">
+                <button class="goal-card active" type="button" data-goal="fat_loss">
+                  <span class="goal-name">Drop body fat</span>
+                  <span class="goal-copy">Create a steady deficit while keeping strength.</span>
+                </button>
+
+                <button class="goal-card" type="button" data-goal="recomp">
+                  <span class="goal-name">Recomp</span>
+                  <span class="goal-copy">Tighten up while slowly building visible muscle.</span>
+                </button>
+
+                <button class="goal-card" type="button" data-goal="lean_gain">
+                  <span class="goal-name">Lean muscle</span>
+                  <span class="goal-copy">Add size without turning the surplus into sloppy bulk.</span>
+                </button>
+
+                <button class="goal-card" type="button" data-goal="strength_gain">
+                  <span class="goal-name">Power build</span>
+                  <span class="goal-copy">Support heavy training with a stronger calorie surplus.</span>
+                </button>
+              </div>
+              <input id="goal" name="goal" type="hidden" value="fat_loss" />
+            </div>
+
+            <button class="primary-button submit-button" type="submit">
+              Build smart coach plan
+            </button>
+          </form>
+        </section>
+
+        <section id="results" class="panel results-panel" data-reveal>
+          <div class="section-heading compact">
+            <p class="eyebrow">Smart coach result</p>
+            <h2>Your plan updates here instantly.</h2>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <p>Maintenance calories</p>
+              <strong id="maintenance-calories">0 kcal</strong>
+              <span>Estimated calories to maintain your current body weight.</span>
+            </article>
+
+            <article class="metric-card accent">
+              <p>Target calories</p>
+              <strong id="target-calories">0 kcal</strong>
+              <span>Your daily intake based on the selected transformation.</span>
+            </article>
+
+            <article class="metric-card">
+              <p>Macros</p>
+              <strong id="macro-targets">0g / 0g / 0g</strong>
+              <span>Protein, carbs, and fat for your current goal.</span>
+            </article>
+
+            <article class="metric-card">
+              <p>Expected pace</p>
+              <strong id="weekly-pace">0.0 kg/week</strong>
+              <span>Approximate weekly direction if you stay on plan.</span>
+            </article>
+          </div>
+
+          <div class="results-layout">
+            <article class="coach-message-card">
+              <div class="card-heading">
+                <p class="eyebrow">Coach note</p>
+                <h3 id="result-title">Fat-loss starter</h3>
+              </div>
+              <p id="coach-message">
+                Your smart coach summary will appear here once the numbers are
+                calculated.
+              </p>
+              <div class="coach-focus">
+                <div>
+                  <span>Body focus</span>
+                  <strong id="body-focus">-</strong>
+                </div>
+                <div>
+                  <span>Nutrition priority</span>
+                  <strong id="nutrition-focus">-</strong>
+                </div>
+              </div>
+            </article>
+
+            <article class="roadmap-card">
+              <div class="card-heading">
+                <p class="eyebrow">Training roadmap</p>
+                <h3>Weekly sessions</h3>
+              </div>
+              <ul id="roadmap-list" class="roadmap-list"></ul>
+            </article>
+
+            <article class="watch-card">
+              <div class="card-heading">
+                <p class="eyebrow">Foods to limit</p>
+                <h3>Prevention list for this goal</h3>
+              </div>
+              <div id="watch-list" class="watch-list"></div>
+              <div class="swap-box">
+                <p class="eyebrow">Better swaps</p>
+                <ul id="swap-list" class="swap-list"></ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="food-radar" class="panel food-panel" data-reveal>
+          <div class="section-heading">
+            <p class="eyebrow">Food radar</p>
+            <h2>Check how many calories each meal adds or removes from your plan.</h2>
+            <p>
+              Pick a food, choose the servings, and the coach will show if it
+              supports your goal or eats into your progress.
+            </p>
+          </div>
+
+          <div class="food-layout">
+            <article class="food-builder">
+              <form id="food-form" class="food-form">
+                <label>
+                  Food
+                  <select id="food-select" name="food-select"></select>
+                </label>
+
+                <label>
+                  Servings
+                  <input
+                    id="servings"
+                    name="servings"
+                    type="number"
+                    min="0.5"
+                    max="6"
+                    step="0.5"
+                    value="1"
+                  />
+                </label>
+
+                <button class="primary-button" type="submit">Add to my day</button>
+              </form>
+
+              <div class="food-preview">
+                <div>
+                  <p class="eyebrow">Preview</p>
+                  <h3 id="food-preview-name">Choose a food</h3>
+                </div>
+                <strong id="food-preview-calories">0 kcal</strong>
+                <p id="food-preview-note">
+                  The preview shows how each serving changes your calorie budget.
+                </p>
+              </div>
+            </article>
+
+            <article class="food-log-card">
+              <div class="card-heading">
+                <p class="eyebrow">Daily intake</p>
+                <h3>What you have logged</h3>
+              </div>
+
+              <div class="food-totals">
+                <div>
+                  <span>Logged calories</span>
+                  <strong id="food-total">0 kcal</strong>
+                </div>
+                <div>
+                  <span>Plan impact</span>
+                  <strong id="food-balance">You are on track.</strong>
+                </div>
+              </div>
+
+              <ul id="food-log" class="food-log"></ul>
+              <button id="clear-log" class="ghost-button subtle" type="button">
+                Clear day
+              </button>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
