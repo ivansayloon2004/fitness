@@ -2,8 +2,6 @@ services:
   - type: web
     runtime: static
     name: pulseforge-coach
-    buildCommand: ""
+    buildCommand: echo "Static site ready"
     staticPublishPath: .
-    envVars:
-      - key: SKIP_INSTALL_DEPS
-        value: "true"
+    autoDeployTrigger: commit
