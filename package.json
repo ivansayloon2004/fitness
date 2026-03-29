@@ -1,0 +1,13 @@
+{
+  "name": "pulseforge-coach",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart fitness coach website for body transformation and calorie guidance.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
